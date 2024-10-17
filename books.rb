@@ -7,14 +7,6 @@ USERS_PATH = 'db/users.db'.freeze
 BOOKS_TABLE_PATH = 'data/books.csv'.freeze
 BOOKED_BOOKS_PATH = 'db/borrowed_books.db'.freeze
 
-class User
-  attr_accessor :name
-  def initialize(name)
-    @name = name
-  end
-
-end
-
 authenticator = UserAuthenticator.new
 current_user = authenticator.login
 
@@ -28,7 +20,7 @@ end
 
 loop do
   options
-  user_option = gets.chomp
+  user_option = gets.chomp.strip
 
   case user_option
   when '1'
@@ -36,11 +28,12 @@ loop do
     list_available_books(available_books)
   when '2'
     puts 'Provide book id to borrow a book:'
-    book_id = gets.chomp
-    BorrowBook.borrow(book_id, current_user)
+    book_id = gets.chomp.strip
+    borrow_book = BorrowBook.new(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
+    borrow_book.borrow(book_id, current_user)
   when '3'
     puts 'To return book provide its id:'
-    return_book_id = gets.chomp
+    return_book_id = gets.chomp.strip
     return_book(BOOKED_BOOKS_PATH, return_book_id)
 
   when '4'
