@@ -1,9 +1,9 @@
-require_relative 'models/borrow_book'
-require_relative 'models/available_books'
-require_relative 'models/return_book'
+require_relative 'utils/borrow_book'
+require_relative 'utils/available_books'
+require_relative 'utils/return_book'
 
-USERS_PATH = 'utils/users.db'.freeze
-BOOKS_TABLE_PATH = 'utils/books.csv'.freeze
+USERS_PATH = 'db/users.db'.freeze
+BOOKS_TABLE_PATH = 'db/books.csv'.freeze
 BOOKED_BOOKS_PATH = 'borrowed_books.db'.freeze
 
 class UserAuthenticator
