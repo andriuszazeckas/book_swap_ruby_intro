@@ -69,3 +69,11 @@ end
 
 authenticator = UserAuthenticator.new
 current_user = authenticator.login
+
+def options
+  puts "\nPlease choose your options:"
+  puts '1. List available books'
+  puts '2. Borrow a book'
+  puts '3. Return a book'
+  puts '4. Exit'
+end
