@@ -8,7 +8,7 @@ module BorrowBook
     find_book = available_books.find { |book| book['Book ID'] == book_id }
     if find_book
 
-      File.write('borrowed_books.db', "#{book_id}, #{username}\n", mode: 'a')
+      File.write(BOOKED_BOOKS_PATH, "#{book_id}, #{username}\n", mode: 'a')
 
       puts "You have borrowed: #{find_book['Book Name']}"
     else
