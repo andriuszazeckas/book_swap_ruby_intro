@@ -1,4 +1,11 @@
+require_relative 'models/borrow_book'
+require_relative 'models/available_books'
+require_relative 'models/return_book'
+
 USERS_PATH = 'utils/users.db'.freeze
+BOOKS_TABLE_PATH = 'utils/books.csv'.freeze
+BOOKED_BOOKS_PATH = 'borrowed_books.db'.freeze
+
 class UserAuthenticator
   def initialize(users_path = USERS_PATH)
     @users_path = users_path
@@ -76,4 +83,29 @@ def options
   puts '2. Borrow a book'
   puts '3. Return a book'
   puts '4. Exit'
+end
+
+loop do
+  options
+  user_option = gets.chomp
+
+  case user_option
+  when '1'
+    available_books = get_available_books(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
+    list_available_books(available_books)
+  when '2'
+    puts 'Provide book id to borrow a book:'
+    book_id = gets.chomp
+    BorrowBook.borrow(book_id, current_user)
+  when '3'
+    puts 'To return book provide its id:'
+    return_book_id = gets.chomp
+    return_book(BOOKED_BOOKS_PATH, return_book_id)
+
+  when '4'
+    puts 'Exiting program. Have a great day!'
+    break
+  else
+    puts 'Choose only 1, 2, 3 or 4'
+  end
 end
