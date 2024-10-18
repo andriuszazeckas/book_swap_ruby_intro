@@ -15,7 +15,7 @@ class BorrowBook
       File.write(@booked_books_path, "#{book_id}, #{username}\n", mode: 'a')
       puts "You have borrowed: #{find_book['Book Name']}"
     else
-      puts "Book with ID #{book_id} not found."
+      raise BookNotAvailableError, book_id
     end
   end
 end

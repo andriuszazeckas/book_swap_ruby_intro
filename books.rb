@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 require_relative 'lib/services/borrow_book'
 require_relative 'lib/services/available_books'
 require_relative 'lib/services/return_book_service'
 require_relative 'lib/authentication/user_authentication'
+require_relative 'custom_exceptions/book_not_available_error'
 
-USERS_PATH = 'db/users.db'.freeze
-BOOKS_TABLE_PATH = 'data/books.csv'.freeze
-BOOKED_BOOKS_PATH = 'db/borrowed_books.db'.freeze
+USERS_PATH = 'db/users.db'
+BOOKS_TABLE_PATH = 'data/books.csv'
+BOOKED_BOOKS_PATH = 'db/borrowed_books.db'
 
 authenticator = UserAuthenticator.new(USERS_PATH)
 current_user = authenticator.login
@@ -42,4 +45,6 @@ loop do
   else
     puts 'Choose only 1, 2, 3 or 4'
   end
+rescue BookNotAvailableError => e
+  puts e.message
 end
