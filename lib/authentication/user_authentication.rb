@@ -1,5 +1,5 @@
 class UserAuthenticator
-  def initialize(users_path = USERS_PATH)
+  def initialize(users_path)
     @users_path = users_path
     ensure_users_file_exists
   end

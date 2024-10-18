@@ -1,13 +1,13 @@
 require_relative 'lib/services/borrow_book'
 require_relative 'lib/services/available_books'
-require_relative 'lib/services/return_book'
+require_relative 'lib/services/return_book_service'
 require_relative 'lib/authentication/user_authentication'
 
 USERS_PATH = 'db/users.db'.freeze
 BOOKS_TABLE_PATH = 'data/books.csv'.freeze
 BOOKED_BOOKS_PATH = 'db/borrowed_books.db'.freeze
 
-authenticator = UserAuthenticator.new
+authenticator = UserAuthenticator.new(USERS_PATH)
 current_user = authenticator.login
 
 def options
@@ -34,8 +34,8 @@ loop do
   when '3'
     puts 'To return book provide its id:'
     return_book_id = gets.chomp.strip
-    return_book(BOOKED_BOOKS_PATH, return_book_id)
-
+    return_book_service = ReturnBookService.new
+    return_book_service.return_book(BOOKED_BOOKS_PATH, return_book_id)
   when '4'
     puts 'Exiting program. Have a great day!'
     break
