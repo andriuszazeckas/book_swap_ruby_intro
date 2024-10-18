@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/services/borrow_book'
+require_relative 'lib/services/borrow_book_service'
 require_relative 'lib/services/available_books'
 require_relative 'lib/services/return_book_service'
 require_relative 'lib/authentication/user_authentication'
@@ -32,8 +32,8 @@ loop do
   when '2'
     puts 'Provide book id to borrow a book:'
     book_id = gets.chomp.strip
-    borrow_book = BorrowBook.new(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
-    borrow_book.borrow(book_id, current_user)
+    borrow_book_service = BorrowBookService.new(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
+    borrow_book_service.borrow_book(book_id, current_user)
   when '3'
     puts 'To return book provide its id:'
     return_book_id = gets.chomp.strip
