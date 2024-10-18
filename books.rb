@@ -25,26 +25,28 @@ loop do
   options
   user_option = gets.chomp.strip
 
-  case user_option
-  when '1'
-    available_books = get_available_books(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
-    list_available_books(available_books)
-  when '2'
-    puts 'Provide book id to borrow a book:'
-    book_id = gets.chomp.strip
-    borrow_book_service = BorrowBookService.new(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
-    borrow_book_service.borrow_book(book_id, current_user)
-  when '3'
-    puts 'To return book provide its id:'
-    return_book_id = gets.chomp.strip
-    return_book_service = ReturnBookService.new
-    return_book_service.return_book(BOOKED_BOOKS_PATH, return_book_id)
-  when '4'
-    puts 'Exiting program. Have a great day!'
-    break
-  else
-    puts 'Choose only 1, 2, 3 or 4'
+  begin
+    case user_option
+    when '1'
+      available_books = get_available_books(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
+      list_available_books(available_books)
+    when '2'
+      puts 'Provide book id to borrow a book:'
+      book_id = gets.chomp.strip
+      borrow_book_service = BorrowBookService.new(BOOKS_TABLE_PATH, BOOKED_BOOKS_PATH)
+      borrow_book_service.borrow_book(book_id, current_user)
+    when '3'
+      puts 'To return book provide its id:'
+      return_book_id = gets.chomp.strip
+      return_book_service = ReturnBookService.new
+      return_book_service.return_book(BOOKED_BOOKS_PATH, return_book_id)
+    when '4'
+      puts 'Exiting program. Have a great day!'
+      break
+    else
+      puts 'Choose only 1, 2, 3 or 4'
+    end
+  rescue BookNotAvailableError => e
+    puts e.message
   end
-rescue BookNotAvailableError => e
-  puts e.message
 end
